@@ -42,10 +42,12 @@ int		ft_parse_args(char **av, t_tab *tab)
 
 	i = 0;
 	while (++i < 6)
-		if (ft_nznum(av[i]) > 0)
+	{
+		if ((rez = ft_nznum(av[i])) > 0)
 			ft_args(tab, rez, i);
 		else
 			return (0);
+	}
 	return (1);
 }
 

@@ -19,13 +19,6 @@
 # include <unistd.h>
 # include <strings.h>
 
-typedef struct	s_philo
-{
-	int			id;
-	
-
-}				t_philo;
-
 typedef struct	s_tab
 {
 	int			philos;
@@ -34,6 +27,14 @@ typedef struct	s_tab
 	int			sleep;
 	int			cycle;
 }				t_tab;
+
+typedef struct	s_philo
+{
+	int			id;
+	int			lastmeal;
+	t_tab		*tab;
+	pthread_t	philo;
+}				t_philo;
 
 int		ft_init_table(char **argv, t_tab *tab);
 int		ft_nznum(const char *str);
