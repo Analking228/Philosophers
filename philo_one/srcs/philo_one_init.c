@@ -18,7 +18,7 @@ void	ft_init_tab(t_tab *tab)
 	tab->die = 0;
 	tab->eat = 0;
 	tab->sleep = 0;
-	tab->cycle = 0;
+	tab->cycles = 0;
 }
 
 void	ft_args(t_tab *tab, int	num, int count)
@@ -32,7 +32,7 @@ void	ft_args(t_tab *tab, int	num, int count)
 	else if (count == 4)
 		tab->sleep = num;
 	else if (count == 5)
-		tab->cycle = num;
+		tab->cycles = num;
 }
 
 int		ft_parse_args(char **av, t_tab *tab)

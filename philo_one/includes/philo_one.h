@@ -18,6 +18,7 @@
 # include <stdlib.h>
 # include <unistd.h>
 # include <strings.h>
+# include <sys/time.h>
 
 typedef struct	s_tab
 {
@@ -25,13 +26,14 @@ typedef struct	s_tab
 	int			die;
 	int			eat;
 	int			sleep;
-	int			cycle;
+	int			cycles;
 }				t_tab;
 
 typedef struct	s_philo
 {
 	int			id;
 	int			lastmeal;
+	int			meals;
 	t_tab		*tab;
 	pthread_t	philo;
 }				t_philo;

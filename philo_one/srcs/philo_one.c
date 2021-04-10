@@ -31,6 +31,7 @@ void			ft_make_school(t_philo *philo, t_tab *tab, int id)
 {
 	philo->id = id;
 	philo->tab = tab;
+	philo->meals = 0;
 }
 
 void*			ft_acient_greece(void *student)
@@ -38,9 +39,18 @@ void*			ft_acient_greece(void *student)
 	t_philo		*philo;
 
 	philo = (t_philo *)student;
-	printf("Welcome to the club, buddy! I'm the %d\n", philo->id);
-	usleep(50);
-	printf("Ending\n");
+	//philo->lastmeal = get_time();
+	while (philo->meals != philo->tab->cycles)
+	{
+		printf("Welcome to the club, buddy! I'm the %d\n", philo->id);
+		printf("%d is eating\n", philo->id);
+		usleep(philo->tab->eat);
+		printf("%d is sleeping\n", philo->id);
+		usleep(philo->tab->sleep);
+		printf("%d is thinking\n", philo->id);
+		//ft_greecelife();
+		philo->meals++;
+	}
 	return (NULL);
 }
 
@@ -50,12 +60,6 @@ void		*ft_init_philos(t_tab *tab)
 	int		i;
 
 	i = -1;
-	// philo[0].id = 0;
-	// pthread_create(&philo[++i].philo, NULL, &ft_acient_greece, (void *)&philo[i]);
-	// philo[1].id = 1;
-	// pthread_create(&philo[++i].philo, NULL, &ft_acient_greece, (void *)&philo[i]);
-	// pthread_join(philo[0].philo, NULL);
-	// pthread_join(philo[1].philo, NULL);
 	while (++i < tab->philos)
 	{
 		ft_make_school(&philo[i], tab, i);
