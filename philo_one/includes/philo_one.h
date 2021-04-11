@@ -29,6 +29,7 @@ typedef struct		s_tab
 	int				cycles;
 	long			bigbang;
 	pthread_mutex_t	mutx_print;
+	pthread_mutex_t	*m_fork;
 }					t_tab;
 
 typedef struct		s_philo

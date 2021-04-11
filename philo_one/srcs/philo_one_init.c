@@ -26,7 +26,12 @@ void	ft_init_tab(t_tab *tab)
 void	ft_args(t_tab *tab, int	num, int count)
 {
 	if (count == 1)
+	{
 		tab->philos = num;
+		tab->m_fork = (pthread_mutex_t *)malloc(num * sizeof(pthread_mutex_t));
+		while (--num != 0)
+			pthread_mutex_init(&tab->m_fork[num], NULL);
+	}
 	else if (count == 2)
 		tab->die = num;
 	else if (count == 3)
