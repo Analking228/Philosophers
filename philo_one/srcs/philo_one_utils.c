@@ -12,14 +12,23 @@
 
 #include "../includes/philo_one.h"
 
-void	ft_putstr(char *str)
+void		ft_print(t_philo *ph, char *str)
 {
-	int	len;
-	len = 0;
-	while (str[len])
-		len++;
-	write(1, str, len);
-	write(1, "\n", 1);
+	pthread_mutex_lock(&ph->tab->mutx_print);
+	printf("%ld : %d %s\n", ft_get_time() - ph->tab->bigbang, ph->id, str);
+	pthread_mutex_unlock(&ph->tab->mutx_print);
+}
+
+long		ft_get_time()
+{
+	struct timeval	*tv;
+	long			utime;
+
+	tv = (struct timeval *)malloc(sizeof(struct timeval));
+	gettimeofday(tv, NULL);
+	utime = tv->tv_usec;
+	free(tv);
+	return (utime);
 }
 
 int		ft_isspace(char c)
@@ -32,7 +41,7 @@ int		ft_isspace(char c)
 
 void	ft_exit(char *str)
 {
-	ft_putstr(str);
+	printf("%s\n", str);
 	exit(0);
 }
 

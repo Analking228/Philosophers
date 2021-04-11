@@ -19,6 +19,8 @@ void	ft_init_tab(t_tab *tab)
 	tab->eat = 0;
 	tab->sleep = 0;
 	tab->cycles = 0;
+	tab->bigbang = ft_get_time();
+	pthread_mutex_init(&tab->mutx_print, NULL);
 }
 
 void	ft_args(t_tab *tab, int	num, int count)

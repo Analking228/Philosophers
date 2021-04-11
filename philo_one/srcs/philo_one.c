@@ -12,21 +12,6 @@
 
 #include "../includes/philo_one.h"
 
-void		*ft_eat(void *arr)
-{
-	return (NULL);
-}
-
-void		*ft_sleep(void *arr)
-{
-	return (NULL);
-}
-
-void		*ft_think(void *arr)
-{
-	return (NULL);
-}
-
 void			ft_make_school(t_philo *philo, t_tab *tab, int id)
 {
 	philo->id = id;
@@ -36,18 +21,17 @@ void			ft_make_school(t_philo *philo, t_tab *tab, int id)
 
 void*			ft_acient_greece(void *student)
 {
-	t_philo		*philo;
+	t_philo			*philo;
+	long 			lifetime;
 
 	philo = (t_philo *)student;
-	//philo->lastmeal = get_time();
 	while (philo->meals != philo->tab->cycles)
 	{
-		printf("Welcome to the club, buddy! I'm the %d\n", philo->id);
-		printf("%d is eating\n", philo->id);
+		ft_print(philo, "is eating");
 		usleep(philo->tab->eat);
-		printf("%d is sleeping\n", philo->id);
+		ft_print(philo, "is sleeping");
 		usleep(philo->tab->sleep);
-		printf("%d is thinking\n", philo->id);
+		ft_print(philo, "is thinking");
 		//ft_greecelife();
 		philo->meals++;
 	}
@@ -80,5 +64,6 @@ int			main(int argc, char **argv)
 		ft_exit("Wrong arguments' amount");
 	ft_init_table(argv, &tab);
 	ft_init_philos(&tab);
+	pthread_mutex_destroy(&tab.mutx_print);
 	return (1);
 }
