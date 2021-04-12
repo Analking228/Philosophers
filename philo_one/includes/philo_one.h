@@ -31,6 +31,7 @@ typedef struct		s_tab
 	int				cycles;
 	pthread_mutex_t	mutx_print;
 	pthread_mutex_t	mutx_death;
+	pthread_mutex_t	mutx_ctrl;
 	pthread_mutex_t	*m_fork;
 }					t_tab;
 

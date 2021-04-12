@@ -35,40 +35,46 @@ void*			ft_death_patrol(void *student)
 {
 	t_philo		*philo;
 
+	pthread_mutex_lock(&philo->tab->mutx_ctrl);
 	philo = (t_philo *)student;
-	while (1 < 2 && philo->meals != philo->tab->cycles)
+	while ((philo->meals < philo->tab->cycles) && !philo->tab->is_dead &&\
+			(ft_get_time() - philo->lastmeal > philo->tab->starv))
 	{
+		pthread_mutex_unlock(&philo->tab->mutx_ctrl);
 		usleep(100);
-		if (ft_get_time() - philo->lastmeal > philo->tab->starv)
-		{
-			pthread_mutex_lock(&philo->tab->mutx_death);
-			philo->tab->is_dead = 1;
-			ft_print(philo, "is dead");
-			philo->tab->necrologue = 1;
-			pthread_mutex_unlock(&philo->tab->mutx_death);
-			return (NULL);
-		}
+		pthread_mutex_lock(&philo->tab->mutx_ctrl);
 	}
-	return (NULL);
+	pthread_mutex_lock(&philo->tab->mutx_ctrl);
+	if (philo->meals < philo->tab->cycles)
+		return (NULL);
+	else
+	{
+		pthread_mutex_lock(&philo->tab->mutx_death);
+		philo->tab->is_dead = 1;
+		ft_print(philo, "is dead");
+		philo->tab->necrologue = 1;
+		pthread_mutex_unlock(&philo->tab->mutx_death);
+		return (NULL);
+	}
 }
 
 void*			ft_acient_greece(void *student)
 {
 	t_philo			*philo;
 	pthread_t		death_patrol;
-	long 			lifetime;
 
 	philo = (t_philo *)student;
+	printf("philo %d is ready for duty\n", philo->id);
 	pthread_create(&death_patrol, NULL, &ft_death_patrol, philo);
-	while (philo->meals != philo->tab->cycles && !philo->tab->is_dead)
+	while ((philo->meals < philo->tab->cycles) && !philo->tab->is_dead)
 		ft_greecelife(philo);
 	pthread_join(death_patrol, NULL);
 	return (NULL);
 }
 
-void		*ft_init_philos(t_tab *tab)
+int			ft_init_philos(t_tab *tab)
 {
-	t_philo	philo[5];
+	t_philo	philo[tab->philos];
 	int		i;
 
 	i = -1;
@@ -80,7 +86,7 @@ void		*ft_init_philos(t_tab *tab)
 	i = -1;
 	while (++i < tab->philos)
 		pthread_join(philo[i].philo, NULL);
-	return (NULL);
+	return (1);
 }
 
 int			main(int argc, char **argv)
@@ -94,6 +100,7 @@ int			main(int argc, char **argv)
 	ft_init_philos(&tab);
 	pthread_mutex_destroy(&tab.mutx_print);
 	pthread_mutex_destroy(&tab.mutx_death);
+	pthread_mutex_destroy(&tab.mutx_ctrl);
 	while (--tab.philos != -1)
 		pthread_mutex_destroy(&tab.m_fork[tab.philos]);
 	return (1);

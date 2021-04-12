@@ -16,15 +16,12 @@ void		ft_wait(long time)
 {
 	long				start;
 	long				stop;
-	long				pause;
 
 	start = ft_get_time();
 	stop = start;
-	pause = stop - start;
-	while (pause < time)
+	while (stop - start < time)
 	{
 		stop = ft_get_time();
-		pause = stop - start;
 		usleep(10);
 	}
 }
