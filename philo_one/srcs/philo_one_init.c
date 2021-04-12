@@ -15,12 +15,14 @@
 void	ft_init_tab(t_tab *tab)
 {
 	tab->philos = 0;
-	tab->die = 0;
+	tab->is_dead = 0;
+	tab->necrologue = 0;
+	tab->starv = 0;
 	tab->eat = 0;
 	tab->sleep = 0;
 	tab->cycles = 0;
-	tab->bigbang = ft_get_time();
 	pthread_mutex_init(&tab->mutx_print, NULL);
+	pthread_mutex_init(&tab->mutx_death, NULL);
 }
 
 void	ft_args(t_tab *tab, int	num, int count)
@@ -33,11 +35,11 @@ void	ft_args(t_tab *tab, int	num, int count)
 			pthread_mutex_init(&tab->m_fork[num], NULL);
 	}
 	else if (count == 2)
-		tab->die = num;
+		tab->starv = num * 1000;
 	else if (count == 3)
-		tab->eat = num;
+		tab->eat = num * 1000;
 	else if (count == 4)
-		tab->sleep = num;
+		tab->sleep = num * 1000;
 	else if (count == 5)
 		tab->cycles = num;
 }

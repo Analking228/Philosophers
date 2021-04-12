@@ -23,19 +23,22 @@
 typedef struct		s_tab
 {
 	int				philos;
-	int				die;
+	int				is_dead;
+	int				necrologue;
+	int				starv;
 	int				eat;
 	int				sleep;
 	int				cycles;
-	long			bigbang;
 	pthread_mutex_t	mutx_print;
+	pthread_mutex_t	mutx_death;
 	pthread_mutex_t	*m_fork;
 }					t_tab;
 
 typedef struct		s_philo
 {
 	int				id;
-	int				lastmeal;
+	long			lastmeal;
+	long			birthday;
 	int				meals;
 	t_tab			*tab;
 	pthread_t		philo;
@@ -47,6 +50,7 @@ int					ft_init_table(char **argv, t_tab *tab);
 int					ft_nznum(const char *str);
 long				ft_get_time();
 void				ft_exit(char *str);
+void				ft_wait(long time);
 void				ft_print(t_philo *philo, char *str);
 
 #endif

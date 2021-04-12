@@ -12,22 +12,45 @@
 
 #include "../includes/philo_one.h"
 
+void		ft_wait(long time)
+{
+	long				start;
+	long				stop;
+	long				pause;
+
+	start = ft_get_time();
+	stop = start;
+	pause = stop - start;
+	while (pause < time)
+	{
+		stop = ft_get_time();
+		pause = stop - start;
+		usleep(10);
+	}
+}
+
 void		ft_print(t_philo *ph, char *str)
 {
+	long	time;
+
 	pthread_mutex_lock(&ph->tab->mutx_print);
-	printf("%ld : %d %s\n", ft_get_time() - ph->tab->bigbang, ph->id, str);
+	if (ph->tab->is_dead && ph->tab->necrologue)
+	{
+		pthread_mutex_unlock(&ph->tab->mutx_print);
+		return ;
+	}
+	time = ((ft_get_time() - ph->birthday) / 1000);
+	printf("[%ld] %d : %s\n", time, ph->id, str);
 	pthread_mutex_unlock(&ph->tab->mutx_print);
 }
 
 long		ft_get_time()
 {
-	struct timeval	*tv;
+	struct timeval	tv;
 	long			utime;
 
-	tv = (struct timeval *)malloc(sizeof(struct timeval));
-	gettimeofday(tv, NULL);
-	utime = tv->tv_usec;
-	free(tv);
+	gettimeofday(&tv, NULL);
+	utime = tv.tv_usec;
 	return (utime);
 }
 

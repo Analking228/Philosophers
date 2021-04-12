@@ -16,17 +16,40 @@ void			ft_make_school(t_philo *philo, t_tab *tab, int id)
 {
 	philo->id = id;
 	philo->tab = tab;
-	philo->meals = 0;
+	philo->birthday = ft_get_time();
+	philo->lastmeal = philo->birthday;
 }
 
 void			ft_greecelife(t_philo *philo)
 {
 	ft_print(philo, "is eating");
-	usleep(philo->tab->eat);
+	ft_wait(philo->tab->eat);
+	philo->lastmeal = ft_get_time();
 	ft_print(philo, "is sleeping");
-	usleep(philo->tab->sleep);
+	ft_wait(philo->tab->sleep);
 	ft_print(philo, "is thinking");
 	philo->meals++;
+}
+
+void*			ft_death_patrol(void *student)
+{
+	t_philo		*philo;
+
+	philo = (t_philo *)student;
+	while (1 < 2 && philo->meals != philo->tab->cycles)
+	{
+		usleep(100);
+		if (ft_get_time() - philo->lastmeal > philo->tab->starv)
+		{
+			pthread_mutex_lock(&philo->tab->mutx_death);
+			philo->tab->is_dead = 1;
+			ft_print(philo, "is dead");
+			philo->tab->necrologue = 1;
+			pthread_mutex_unlock(&philo->tab->mutx_death);
+			return (NULL);
+		}
+	}
+	return (NULL);
 }
 
 void*			ft_acient_greece(void *student)
@@ -36,10 +59,10 @@ void*			ft_acient_greece(void *student)
 	long 			lifetime;
 
 	philo = (t_philo *)student;
-	//pthread_create(&death_patrol, NULL, &death_patrol, philo);
-	while (philo->meals != philo->tab->cycles)
+	pthread_create(&death_patrol, NULL, &ft_death_patrol, philo);
+	while (philo->meals != philo->tab->cycles && !philo->tab->is_dead)
 		ft_greecelife(philo);
-	//pthread_join(&death_patrol, NULL);
+	pthread_join(death_patrol, NULL);
 	return (NULL);
 }
 
@@ -70,6 +93,7 @@ int			main(int argc, char **argv)
 	ft_init_table(argv, &tab);
 	ft_init_philos(&tab);
 	pthread_mutex_destroy(&tab.mutx_print);
+	pthread_mutex_destroy(&tab.mutx_death);
 	while (--tab.philos != -1)
 		pthread_mutex_destroy(&tab.m_fork[tab.philos]);
 	return (1);
