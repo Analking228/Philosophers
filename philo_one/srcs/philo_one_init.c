@@ -21,6 +21,7 @@ void	ft_init_tab(t_tab *tab)
 	tab->eat = 0;
 	tab->sleep = 0;
 	tab->cycles = 0;
+	tab->bigb = 0;
 	pthread_mutex_init(&tab->mutx_print, NULL);
 	pthread_mutex_init(&tab->mutx_death, NULL);
 	pthread_mutex_init(&tab->mutx_ctrl, NULL);
@@ -32,7 +33,7 @@ void	ft_args(t_tab *tab, int	num, int count)
 	{
 		tab->philos = num;
 		tab->m_fork = (pthread_mutex_t *)malloc(num * sizeof(pthread_mutex_t));
-		while (--num != 0)
+		while (--num >= 0)
 			pthread_mutex_init(&tab->m_fork[num], NULL);
 	}
 	else if (count == 2)

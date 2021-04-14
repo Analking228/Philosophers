@@ -25,10 +25,11 @@ typedef struct		s_tab
 	int				philos;
 	int				is_dead;
 	int				necrologue;
-	int				starv;
-	int				eat;
-	int				sleep;
-	int				cycles;
+	long			starv;
+	long			eat;
+	long			sleep;
+	long			cycles;
+	long			bigb;
 	pthread_mutex_t	mutx_print;
 	pthread_mutex_t	mutx_death;
 	pthread_mutex_t	mutx_ctrl;
@@ -53,5 +54,7 @@ long				ft_get_time();
 void				ft_exit(char *str);
 void				ft_wait(long time);
 void				ft_print(t_philo *philo, char *str);
+void				ft_make_school(t_philo *philo, t_tab *tab, int id);
+void				*ft_acient_greece(void *student);
 
 #endif

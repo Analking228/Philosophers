@@ -26,19 +26,20 @@ void		ft_wait(long time)
 	}
 }
 
-void		ft_print(t_philo *ph, char *str)
+void				ft_print(t_philo *philo, char *str)
 {
-	long	time;
+	long			time;
 
-	pthread_mutex_lock(&ph->tab->mutx_print);
-	if (ph->tab->is_dead && ph->tab->necrologue)
+	pthread_mutex_lock(&philo->tab->mutx_print);
+	if (philo->tab->is_dead && philo->tab->necrologue)
 	{
-		pthread_mutex_unlock(&ph->tab->mutx_print);
+		pthread_mutex_unlock(&philo->tab->mutx_print);
 		return ;
 	}
-	time = ((ft_get_time() - ph->birthday) / 1000);
-	printf("[%ld] %d : %s\n", time, ph->id, str);
-	pthread_mutex_unlock(&ph->tab->mutx_print);
+	time = 0;
+	time = (ft_get_time() - philo->tab->bigb) / 1000;
+	printf("[%ld] %d : %s\n", time, philo->id, str);
+	pthread_mutex_unlock(&philo->tab->mutx_print);
 }
 
 long		ft_get_time()
