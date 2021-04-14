@@ -46,13 +46,13 @@ void	ft_args(t_tab *tab, int	num, int count)
 		tab->cycles = num;
 }
 
-int		ft_parse_args(char **av, t_tab *tab)
+int		ft_parse_args(char **av, t_tab *tab, int argc)
 {
 	int	i;
 	int	rez;
 
 	i = 0;
-	while (++i < 6)
+	while (++i < argc)
 	{
 		if ((rez = ft_nznum(av[i])) > 0)
 			ft_args(tab, rez, i);
@@ -62,10 +62,10 @@ int		ft_parse_args(char **av, t_tab *tab)
 	return (1);
 }
 
-int		ft_init_table(char **argv, t_tab *tab)
+int		ft_init_table(char **argv, t_tab *tab, int argc)
 {
 	ft_init_tab(tab);
-	if (!ft_parse_args(argv, tab))
+	if (!ft_parse_args(argv, tab, argc))
 		ft_exit("Bad argument");
 	return (1);
 }

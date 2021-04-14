@@ -36,9 +36,9 @@ int			main(int argc, char **argv)
 	int		i;
 	t_tab	tab;
 
-	if (argc != 6)
+	if (argc < 5)
 		ft_exit("Wrong arguments' amount");
-	ft_init_table(argv, &tab);
+	ft_init_table(argv, &tab, argc);
 	ft_init_philos(&tab);
 	pthread_mutex_destroy(&tab.mutx_print);
 	pthread_mutex_destroy(&tab.mutx_death);

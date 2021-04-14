@@ -49,12 +49,19 @@ void			ft_greecelife(t_philo *philo)
 	return ;
 }
 
+int				ft_cycles(int meals, int cycles)
+{
+	if ((cycles == 0) || (meals < cycles))
+		return (1);
+	return (0);
+}
+
 void*			ft_death_patrol(void *student)
 {
 	t_philo		*philo;
 
 	philo = (t_philo *)student;
-	while ((philo->meals < philo->tab->cycles) && !philo->tab->is_dead \
+	while (ft_cycles(philo->meals,philo->tab->cycles) && !philo->tab->is_dead \
 	&& ((ft_get_time() - philo->lastmeal) < philo->tab->starv))
 		usleep(10);
 	if (((ft_get_time() - philo->lastmeal) >= philo->tab->starv) && !philo->tab->is_dead)
@@ -76,7 +83,7 @@ void			*ft_acient_greece(void *student)
 	philo = (t_philo *)student;
 	philo->birthday = ft_get_time();
 	pthread_create(&death_patrol, NULL, &ft_death_patrol, philo);
-	while (philo->meals < philo->tab->cycles && !philo->tab->is_dead \
+	while (ft_cycles(philo->meals,philo->tab->cycles) && !philo->tab->is_dead \
 	&& ((ft_get_time() - philo->lastmeal) < philo->tab->starv))
 		ft_greecelife(philo);
 	pthread_join(death_patrol, NULL);
