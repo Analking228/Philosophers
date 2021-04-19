@@ -4,7 +4,7 @@ INCLUDES = -I$(INC_DIR)
 SRCS_DIR = srcs/
 OBJ_DIR = obj/
 FLAGS = #-Wall -Wextra -Werror
-LINUX_LIB_FLAG = #-pthread
+LINUX_LIB_FLAG = -pthread
 
 FILES =	philo_one\
 		philo_one_init\

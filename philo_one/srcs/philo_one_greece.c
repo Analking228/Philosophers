@@ -17,7 +17,6 @@ void			ft_make_school(t_philo *philo, t_tab *tab, int id)
 	philo->id = id;
 	philo->tab = tab;
 	philo->lastmeal = ft_get_time();
-	philo->birthday = 0;
 	philo->meals = 0;
 	return ;
 }
@@ -81,7 +80,6 @@ void			*ft_acient_greece(void *student)
 	pthread_t		death_patrol;
 
 	philo = (t_philo *)student;
-	philo->birthday = ft_get_time();
 	pthread_create(&death_patrol, NULL, &ft_death_patrol, philo);
 	while (ft_cycles(philo->meals,philo->tab->cycles) && !philo->tab->is_dead \
 	&& ((ft_get_time() - philo->lastmeal) < philo->tab->starv))

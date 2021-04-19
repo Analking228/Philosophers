@@ -37,8 +37,8 @@ void				ft_print(t_philo *philo, char *str)
 		return ;
 	}
 	time = 0;
-	time = (ft_get_time() - philo->tab->bigb) / 1000;
-	printf("[%ld] %d : %s\n", time, philo->id, str);
+	time = (ft_get_time() - philo->tab->bigb) / 100;
+	printf("[%ld] %d %s\n", time, philo->id, str);
 	pthread_mutex_unlock(&philo->tab->mutx_print);
 }
 
@@ -48,8 +48,7 @@ long		ft_get_time()
 	long			utime;
 
 	gettimeofday(&tv, NULL);
-	utime = tv.tv_usec;
-	return (utime);
+	return (tv.tv_sec * 1000 + tv.tv_usec / 1000);
 }
 
 int		ft_isspace(char c)

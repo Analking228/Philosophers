@@ -31,8 +31,6 @@ typedef struct		s_tab
 	long			cycles;
 	long			bigb;
 	pthread_mutex_t	mutx_print;
-	pthread_mutex_t	mutx_death;
-	pthread_mutex_t	mutx_ctrl;
 	pthread_mutex_t	*m_fork;
 }					t_tab;
 
@@ -40,7 +38,6 @@ typedef struct		s_philo
 {
 	int				id;
 	long			lastmeal;
-	long			birthday;
 	int				meals;
 	t_tab			*tab;
 	pthread_t		philo;

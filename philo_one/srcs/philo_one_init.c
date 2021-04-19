@@ -23,8 +23,6 @@ void	ft_init_tab(t_tab *tab)
 	tab->cycles = 0;
 	tab->bigb = 0;
 	pthread_mutex_init(&tab->mutx_print, NULL);
-	pthread_mutex_init(&tab->mutx_death, NULL);
-	pthread_mutex_init(&tab->mutx_ctrl, NULL);
 }
 
 void	ft_args(t_tab *tab, int	num, int count)
@@ -37,11 +35,11 @@ void	ft_args(t_tab *tab, int	num, int count)
 			pthread_mutex_init(&tab->m_fork[num], NULL);
 	}
 	else if (count == 2)
-		tab->starv = num * 1000;
+		tab->starv = num;
 	else if (count == 3)
-		tab->eat = num * 1000;
+		tab->eat = num;
 	else if (count == 4)
-		tab->sleep = num * 1000;
+		tab->sleep = num;
 	else if (count == 5)
 		tab->cycles = num;
 }
