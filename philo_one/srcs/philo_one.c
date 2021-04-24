@@ -41,6 +41,9 @@ int			main(int argc, char **argv)
 	ft_init_table(argv, &tab, argc);
 	ft_init_philos(&tab);
 	pthread_mutex_destroy(&tab.mutx_print);
+	pthread_mutex_destroy(&tab.mutx_patrol);
+	pthread_mutex_destroy(&tab.mutx_dead);
+	pthread_mutex_destroy(&tab.mutx_polite);
 	while (--tab.philos >= 0)
 		pthread_mutex_destroy(&tab.m_fork[tab.philos]);
 	free(tab.m_fork);	

@@ -37,8 +37,8 @@ void				ft_print(t_philo *philo, char *str)
 		return ;
 	}
 	time = 0;
-	time = (ft_get_time() - philo->tab->bigb) / 100;
-	printf("[%ld] %d %s\n", time, philo->id, str);
+	time = (ft_get_time() - philo->tab->bigb);
+	printf("[%ld] %d %s\n", time, philo->id + 1, str);
 	pthread_mutex_unlock(&philo->tab->mutx_print);
 }
 
@@ -70,7 +70,9 @@ int		ft_nznum(const char *str)
 	int		res;
 
 	res = 0;
-	while (ft_isspace(*str))
+	// while (ft_isspace(*str))
+	// 	str++;
+	while ((*str >= 9 && *str <=13) || *str == 32)
 		str++;
 	if (*str == '-')
 		return (res);

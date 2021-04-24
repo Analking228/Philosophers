@@ -23,6 +23,9 @@ void	ft_init_tab(t_tab *tab)
 	tab->cycles = 0;
 	tab->bigb = 0;
 	pthread_mutex_init(&tab->mutx_print, NULL);
+	pthread_mutex_init(&tab->mutx_patrol, NULL);
+	pthread_mutex_init(&tab->mutx_dead, NULL);
+	pthread_mutex_init(&tab->mutx_polite, NULL);
 }
 
 void	ft_args(t_tab *tab, int	num, int count)

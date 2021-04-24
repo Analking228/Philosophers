@@ -31,6 +31,9 @@ typedef struct		s_tab
 	long			cycles;
 	long			bigb;
 	pthread_mutex_t	mutx_print;
+	pthread_mutex_t	mutx_dead;
+	pthread_mutex_t	mutx_polite;
+	pthread_mutex_t	mutx_patrol;
 	pthread_mutex_t	*m_fork;
 }					t_tab;
 
