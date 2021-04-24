@@ -25,7 +25,6 @@ typedef struct		s_tab
 {
 	int				philos;
 	int				is_dead;
-	int				necrologue;
 	long			starv;
 	long			eat;
 	long			sleep;

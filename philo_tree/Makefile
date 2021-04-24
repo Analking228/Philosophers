@@ -1,4 +1,4 @@
-NAME = philo_two
+NAME = philo_three
 INC_DIR = includes/
 INCLUDES = -I$(INC_DIR)
 SRCS_DIR = srcs/
@@ -6,10 +6,10 @@ OBJ_DIR = obj/
 FLAGS = #-Wall -Wextra -Werror
 LINUX_LIB_FLAG = #-pthread
 
-FILES =	philo_two\
-		philo_two_init\
-		philo_two_utils\
-		philo_two_greece
+FILES =	philo_three\
+		philo_three_init\
+		philo_three_utils\
+		philo_three_greece
 
 SRCS_FILES = $(addsuffix .c, $(addprefix $(SRCS_DIR), $(FILES)))
 
