@@ -51,14 +51,6 @@ long		ft_get_time()
 	return (tv.tv_sec * 1000 + tv.tv_usec / 1000);
 }
 
-int		ft_isspace(char c)
-{
-	if ((c == ' ') || (c == '\t') || (c == '\n')
-		|| (c == '\v') || (c == '\f') || (c == '\r'))
-		return (1);
-	return (0);
-}
-
 void	ft_exit(char *str)
 {
 	printf("%s\n", str);
@@ -70,9 +62,7 @@ int		ft_nznum(const char *str)
 	int		res;
 
 	res = 0;
-	// while (ft_isspace(*str))
-	// 	str++;
-	while ((*str >= 9 && *str <=13) || *str == 32)
+	while ((*str >= 9 && *str <= 13) || *str == 32)
 		str++;
 	if (*str == '-')
 		return (res);

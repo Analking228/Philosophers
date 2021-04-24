@@ -4,13 +4,17 @@ void	ft_init_tab(t_tab *tab)
 {
 	tab->philos = 0;
 	tab->is_dead = 0;
-	tab->necrologue = 0;
 	tab->starv = 0;
 	tab->eat = 0;
 	tab->sleep = 0;
 	tab->cycles = 0;
 	tab->bigb = 0;
-	pthread_mutex_init(&tab->mutx_print, NULL);
+	sem_unlink("sem_control");
+	sem_unlink("sem_print");
+	sem_unlink("waiter");
+	tab->waiter = sem_open("waiter", O_CREAT, 0770, 1);
+	tab->sem_control = sem_open("sem_control", O_CREAT, 0770, 1);
+	tab->sem_print = sem_open("sem_print", O_CREAT, 0770, 1);
 }
 
 void	ft_args(t_tab *tab, int	num, int count)
@@ -18,6 +22,8 @@ void	ft_args(t_tab *tab, int	num, int count)
 	if (count == 1)
 	{
 		tab->philos = num;
+		sem_unlink("sem_forks");
+		tab->sem_forks = sem_open("sem_forks", O_CREAT, 0770, tab->philos);
 	}
 	else if (count == 2)
 		tab->starv = num;

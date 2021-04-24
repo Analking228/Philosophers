@@ -1,6 +1,6 @@
 #include "../includes/philo_two.h"
 
-/*int			ft_init_philos(t_tab *tab)
+int			ft_init_philos(t_tab *tab)
 {
 	t_philo	philo[tab->philos];
 	int		i;
@@ -17,7 +17,7 @@
 	while (++i < tab->philos)
 		pthread_join(philo[i].philo, NULL);
 	return (1);
-}*/
+}
 
 int		main(int argc, char **argv)
 {
@@ -31,6 +31,10 @@ int		main(int argc, char **argv)
 	}
 	if (ft_init_table(argv, &tab, argc))
 		return (1);
-	//ft_init_philos(&tab);
+	ft_init_philos(&tab);
+	sem_close(tab.sem_control);
+	sem_close(tab.sem_print);
+	sem_close(tab.sem_forks);
+	sem_close(tab.waiter);
 	return (0);
 }

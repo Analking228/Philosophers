@@ -46,8 +46,6 @@ typedef struct		s_philo
 	pthread_t		philo;
 }					t_philo;
 
-
-
 int					ft_init_table(char **argv, t_tab *tab, int argc);
 int					ft_nznum(const char *str);
 long				ft_get_time();

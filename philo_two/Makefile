@@ -19,7 +19,7 @@ OBJ_FILES = $(addsuffix .o, $(addprefix $(OBJ_DIR), $(FILES)))
 all: $(OBJ_DIR) $(NAME)
 
 $(NAME): $(OBJ_FILES)
-	@$(CC) $(LINUX_LIB_FLAG) -o $(NAME) $(INCLUDES) $(OBJ_FILES) -fsanitize=address
+	@$(CC) $(LINUX_LIB_FLAG) -o $(NAME) $(INCLUDES) $(OBJ_FILES)
 
 $(OBJ_FILES): $(OBJ_DIR)%.o : $(SRCS_DIR)%.c
 	@$(CC) $(FLAGS) $(INCLUDES) -c $< -o $@
