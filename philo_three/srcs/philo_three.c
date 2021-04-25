@@ -12,14 +12,8 @@
 
 #include "../includes/philo_three.h"
 
-int			ft_init_philos(t_tab *tab)
+int	new_norm_trolls(t_tab *tab, int	i, t_philo *philo, pid_t *pid)
 {
-	t_philo		philo[tab->philos];
-	pid_t		pid[tab->philos + 1];
-	int			i;
-
-	i = -1;
-	tab->bigb = ft_get_time();
 	while (++i < tab->philos)
 	{
 		ft_make_school(&philo[i], tab, i);
@@ -29,7 +23,22 @@ int			ft_init_philos(t_tab *tab)
 		else if (pid[i] == 0)
 			ft_acient_greece(&philo[i]);
 	}
-	if ((pid[i] = fork()) < 0)
+	return (i);
+}
+
+int	ft_init_philos(t_tab *tab)
+{
+	t_philo		*philo;
+	pid_t		*pid;
+	int			i;
+
+	i = -1;
+	philo = (t_philo *)malloc(tab->philos * sizeof(t_philo));
+	pid = (pid_t *)malloc((tab->philos + 1) * sizeof(pid_t));
+	tab->bigb = ft_get_time();
+	i = new_norm_trolls(tab, i, philo, pid);
+	pid[i] = fork();
+	if ((pid[i]) < 0)
 		exit(1);
 	else if (pid[i] == 0)
 		ft_wait_cycle(tab);
@@ -37,10 +46,12 @@ int			ft_init_philos(t_tab *tab)
 	i = -1;
 	while (++i < tab->philos)
 		kill(pid[i], SIGKILL);
+	free(pid);
+	free(philo);
 	return (1);
 }
 
-int		main(int argc, char **argv)
+int	main(int argc, char **argv)
 {
 	t_tab	tab;
 
@@ -56,8 +67,8 @@ int		main(int argc, char **argv)
 	sem_close(tab.sem_die);
 	sem_close(tab.sem_print);
 	sem_close(tab.sem_forks);
-	sem_close(tab.waiter);
+	sem_close(tab.polite);
 	sem_close(tab.exit);
-	sem_close(tab.end_of_eat);
+	sem_close(tab.wait_cycle);
 	return (0);
 }
