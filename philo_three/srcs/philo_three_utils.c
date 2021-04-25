@@ -1,6 +1,6 @@
 #include "../includes/philo_three.h"
 
-void		end_of_eat(t_tab *tab)
+void		ft_wait_cycle(t_tab *tab)
 {
 	int		i;
 
@@ -10,7 +10,21 @@ void		end_of_eat(t_tab *tab)
 	sem_post(tab->exit);
 }
 
-void				ft_print(t_philo *philo, char *str, int flag)
+void				ft_wait(long time)
+{
+	long			start;
+	long			stop;
+
+	start = ft_get_time();
+	stop = start;
+	while (stop - start < time)
+	{
+		stop = ft_get_time();
+		usleep(10);
+	}
+}
+
+void				ft_print(t_philo *philo, char *str)
 {
 	long			time;
 
@@ -29,7 +43,6 @@ void				ft_print(t_philo *philo, char *str, int flag)
 long		ft_get_time()
 {
 	struct timeval	tv;
-	long			utime;
 
 	gettimeofday(&tv, NULL);
 	return (tv.tv_sec * 1000 + tv.tv_usec / 1000);

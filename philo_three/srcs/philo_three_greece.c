@@ -7,10 +7,18 @@ int				ft_cycles(int meals, int cycles)
 	return (0);
 }
 
+void			ft_make_school(t_philo *philo, t_tab *tab, int id)
+{
+	philo->id = id;
+	philo->tab = tab;
+	philo->lastmeal = 0;
+	philo->meals = 0;
+}
+
 void		sem_death(t_philo *philo)
 {
 	sem_wait(philo->tab->sem_die);
-	ft_print(philo, "died", 1);
+	ft_print(philo, "is dead");
 	sem_post(philo->tab->exit);
 }
 
@@ -28,7 +36,7 @@ void		*ft_death_patrol(void *philos)
 		sem_wait(philo->tab->sem_control);
 	}
 	sem_post(philo->tab->sem_control);
-	if (philo->meals == philo->tab->cycles)
+	if (!(ft_cycles(philo->meals, philo->tab->cycles)))
 	{
 		sem_post(philo->tab->end_of_eat);
 		exit(0);
@@ -42,18 +50,18 @@ void		ft_greece_life(t_philo *philo)
 {
 	sem_wait(philo->tab->waiter);
 	sem_wait(philo->tab->sem_forks);
-	ft_print(philo, "has taken a fork", 0);
+	ft_print(philo, "has taken a fork");
 	sem_wait(philo->tab->sem_forks);
-	ft_print(philo, "has taken a fork", 0);
+	ft_print(philo, "has taken a fork");
 	sem_post(philo->tab->waiter);
-	ft_print(philo, "is eating", 0);
+	ft_print(philo, "is eating");
 	philo->lastmeal = ft_get_time();
 	ft_wait(philo->tab->eat);
 	sem_post(philo->tab->sem_forks);
 	sem_post(philo->tab->sem_forks);
-	ft_print(philo, "is sleeping", 0);
+	ft_print(philo, "is sleeping");
 	ft_wait(philo->tab->sleep);
-	ft_print(philo, "is thinking", 0);
+	ft_print(philo, "is thinking");
 	philo->meals++;
 }
 

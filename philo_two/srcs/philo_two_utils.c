@@ -12,7 +12,7 @@
 
 #include "../includes/philo_two.h"
 
-void		ft_wait(long time)
+void	ft_wait(long time)
 {
 	long				start;
 	long				stop;
@@ -26,7 +26,7 @@ void		ft_wait(long time)
 	}
 }
 
-void				ft_print(t_philo *philo, char *str)
+void	ft_print(t_philo *philo, char *str)
 {
 	long			time;
 
@@ -42,7 +42,7 @@ void				ft_print(t_philo *philo, char *str)
 	sem_post(philo->tab->sem_print);
 }
 
-long		ft_get_time()
+long	ft_get_time(void)
 {
 	struct timeval	tv;
 	long			utime;
@@ -56,7 +56,7 @@ void	ft_exit(char *str)
 	printf("%s\n", str);
 }
 
-int		ft_nznum(const char *str)
+int	ft_nznum(const char *str)
 {
 	int		res;
 

@@ -11,8 +11,8 @@ void	ft_init_tab(t_tab *tab)
 	tab->bigb = 0;
 	sem_unlink("sem_control");
 	sem_unlink("sem_print");
-	sem_unlink("waiter");
-	tab->waiter = sem_open("waiter", O_CREAT, 0770, 1);
+	sem_unlink("polite");
+	tab->polite = sem_open("polite", O_CREAT, 0770, 1);
 	tab->sem_control = sem_open("sem_control", O_CREAT, 0770, 1);
 	tab->sem_print = sem_open("sem_print", O_CREAT, 0770, 1);
 }
@@ -35,7 +35,7 @@ void	ft_args(t_tab *tab, int	num, int count)
 		tab->cycles = num;
 }
 
-int		ft_parse_args(char **av, t_tab *tab, int argc)
+int	ft_parse_args(char **av, t_tab *tab, int argc)
 {
 	int	i;
 	int	rez;
@@ -43,7 +43,8 @@ int		ft_parse_args(char **av, t_tab *tab, int argc)
 	i = 0;
 	while (++i < argc)
 	{
-		if ((rez = ft_nznum(av[i])) > 0)
+		rez = ft_nznum(av[i]);
+		if (rez > 0)
 			ft_args(tab, rez, i);
 		else
 			return (1);
@@ -51,7 +52,7 @@ int		ft_parse_args(char **av, t_tab *tab, int argc)
 	return (0);
 }
 
-int		ft_init_table(char **argv, t_tab *tab, int argc)
+int	ft_init_table(char **argv, t_tab *tab, int argc)
 {
 	ft_init_tab(tab);
 	if (ft_parse_args(argv, tab, argc))

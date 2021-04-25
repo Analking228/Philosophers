@@ -52,11 +52,10 @@ typedef struct		s_philo
 int					ft_init_table(char **argv, t_tab *tab, int argc);
 int					ft_nznum(const char *str);
 long				ft_get_time();
-void				ft_exit(char *str);
 void				ft_wait(long time);
-void				ft_print(t_philo *philo, char *str, int flag);
+void				ft_print(t_philo *philo, char *str);
 void				ft_make_school(t_philo *philo, t_tab *tab, int id);
 void				*ft_acient_greece(void *student);
-void				end_of_eat(t_tab *tab);
+void				ft_wait_cycle(t_tab *tab);
 
 #endif

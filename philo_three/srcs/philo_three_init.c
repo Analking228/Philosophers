@@ -62,7 +62,7 @@ int		ft_init_table(char **argv, t_tab *tab, int argc)
 	ft_init_tab(tab);
 	if (ft_parse_args(argv, tab, argc))
 	{
-		ft_exit("Bad argument");
+		printf("Bad argument");
 		return (1);
 	}
 	return (0);

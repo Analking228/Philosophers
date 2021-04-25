@@ -12,28 +12,6 @@
 
 #include "../includes/philo_three.h"
 
-void			ft_make_school(t_philo *philo, t_tab *tab, int id)
-{
-	philo->id = id;
-	philo->tab = tab;
-	philo->lastmeal = 0;
-	philo->meals = 0;
-}
-
-void				ft_wait(long time)
-{
-	long			start;
-	long			stop;
-
-	start = ft_get_time();
-	stop = start;
-	while (stop - start < time)
-	{
-		stop = ft_get_time();
-		usleep(10);
-	}
-}
-
 int			ft_init_philos(t_tab *tab)
 {
 	t_philo		philo[tab->philos];
@@ -41,6 +19,7 @@ int			ft_init_philos(t_tab *tab)
 	int			i;
 
 	i = -1;
+	tab->bigb = ft_get_time();
 	while (++i < tab->philos)
 	{
 		ft_make_school(&philo[i], tab, i);
@@ -50,11 +29,10 @@ int			ft_init_philos(t_tab *tab)
 		else if (pid[i] == 0)
 			ft_acient_greece(&philo[i]);
 	}
-	pid[i] = fork();
-	if (pid[i] < 0)
+	if ((pid[i] = fork()) < 0)
 		exit(1);
 	else if (pid[i] == 0)
-		end_of_eat(tab);
+		ft_wait_cycle(tab);
 	sem_wait(tab->exit);
 	i = -1;
 	while (++i < tab->philos)
@@ -64,12 +42,11 @@ int			ft_init_philos(t_tab *tab)
 
 int		main(int argc, char **argv)
 {
-	int		i;
 	t_tab	tab;
 
 	if (argc < 5 || argc > 6)
 	{
-		ft_exit("Wrong arguments' amount");
+		printf("Wrong arguments' amount");
 		return (1);
 	}
 	if (ft_init_table(argv, &tab, argc))

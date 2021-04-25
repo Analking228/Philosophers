@@ -16,7 +16,6 @@ void	ft_init_tab(t_tab *tab)
 {
 	tab->philos = 0;
 	tab->is_dead = 0;
-	tab->necrologue = 0;
 	tab->starv = 0;
 	tab->eat = 0;
 	tab->sleep = 0;
@@ -24,7 +23,6 @@ void	ft_init_tab(t_tab *tab)
 	tab->bigb = 0;
 	pthread_mutex_init(&tab->mutx_print, NULL);
 	pthread_mutex_init(&tab->mutx_patrol, NULL);
-	pthread_mutex_init(&tab->mutx_dead, NULL);
 	pthread_mutex_init(&tab->mutx_polite, NULL);
 }
 
@@ -47,7 +45,7 @@ void	ft_args(t_tab *tab, int	num, int count)
 		tab->cycles = num;
 }
 
-int		ft_parse_args(char **av, t_tab *tab, int argc)
+int	ft_parse_args(char **av, t_tab *tab, int argc)
 {
 	int	i;
 	int	rez;
@@ -55,18 +53,22 @@ int		ft_parse_args(char **av, t_tab *tab, int argc)
 	i = 0;
 	while (++i < argc)
 	{
-		if ((rez = ft_nznum(av[i])) > 0)
+		rez = ft_nznum(av[i]);
+		if (rez > 0)
 			ft_args(tab, rez, i);
 		else
-			return (0);
+			return (1);
 	}
-	return (1);
+	return (0);
 }
 
-int		ft_init_table(char **argv, t_tab *tab, int argc)
+int	ft_init_table(char **argv, t_tab *tab, int argc)
 {
 	ft_init_tab(tab);
-	if (!ft_parse_args(argv, tab, argc))
-		ft_exit("Bad argument");
-	return (1);
+	if (ft_parse_args(argv, tab, argc))
+	{
+		printf("Bad argument");
+		return (1);
+	}
+	return (0);
 }

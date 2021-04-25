@@ -12,10 +12,10 @@
 
 #include "../includes/philo_one.h"
 
-void		ft_wait(long time)
+void	ft_wait(long time)
 {
-	long				start;
-	long				stop;
+	long	start;
+	long	stop;
 
 	start = ft_get_time();
 	stop = start;
@@ -26,12 +26,12 @@ void		ft_wait(long time)
 	}
 }
 
-void				ft_print(t_philo *philo, char *str)
+void	ft_print(t_philo *philo, char *str)
 {
-	long			time;
+	long	time;
 
 	pthread_mutex_lock(&philo->tab->mutx_print);
-	if (philo->tab->is_dead && philo->tab->necrologue)
+	if (philo->tab->is_dead)
 	{
 		pthread_mutex_unlock(&philo->tab->mutx_print);
 		return ;
@@ -42,7 +42,7 @@ void				ft_print(t_philo *philo, char *str)
 	pthread_mutex_unlock(&philo->tab->mutx_print);
 }
 
-long		ft_get_time()
+long	ft_get_time(void)
 {
 	struct timeval	tv;
 	long			utime;
@@ -57,9 +57,9 @@ void	ft_exit(char *str)
 	exit(0);
 }
 
-int		ft_nznum(const char *str)
+int	ft_nznum(const char *str)
 {
-	int		res;
+	int	res;
 
 	res = 0;
 	while ((*str >= 9 && *str <= 13) || *str == 32)

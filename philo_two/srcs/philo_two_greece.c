@@ -12,7 +12,7 @@
 
 #include "../includes/philo_two.h"
 
-void			ft_make_school(t_philo *philo, t_tab *tab, int id)
+void	ft_make_school(t_philo *philo, t_tab *tab, int id)
 {
 	philo->id = id;
 	philo->tab = tab;
@@ -20,14 +20,14 @@ void			ft_make_school(t_philo *philo, t_tab *tab, int id)
 	philo->meals = 0;
 }
 
-void			ft_greecelife(t_philo *philo)
+void	ft_greecelife(t_philo *philo)
 {
-	sem_wait(philo->tab->waiter);
+	sem_wait(philo->tab->polite);
 	sem_wait(philo->tab->sem_forks);
 	ft_print(philo, "has taken a fork");
 	sem_wait(philo->tab->sem_forks);
 	ft_print(philo, "has taken a fork");
-	sem_post(philo->tab->waiter);
+	sem_post(philo->tab->polite);
 	ft_print(philo, "is eating");
 	philo->lastmeal = ft_get_time();
 	ft_wait(philo->tab->eat);
@@ -39,20 +39,20 @@ void			ft_greecelife(t_philo *philo)
 	philo->meals++;
 }
 
-int				ft_cycles(int meals, int cycles)
+int	ft_cycles(int meals, int cycles)
 {
 	if ((cycles == 0) || (meals < cycles))
 		return (1);
 	return (0);
 }
 
-void*			ft_death_patrol(void *student)
+void	*ft_death_patrol(void *student)
 {
 	t_philo		*philo;
 
 	philo = (t_philo *)student;
 	sem_wait(philo->tab->sem_control);
-	while (ft_cycles(philo->meals,philo->tab->cycles) && !philo->tab->is_dead \
+	while (ft_cycles(philo->meals, philo->tab->cycles) && !philo->tab->is_dead \
 	&& ((ft_get_time() - philo->lastmeal) < philo->tab->starv))
 	{
 		sem_post(philo->tab->sem_control);
@@ -60,11 +60,13 @@ void*			ft_death_patrol(void *student)
 		sem_wait(philo->tab->sem_control);
 	}
 	sem_post(philo->tab->sem_control);
-	if (((ft_get_time() - philo->lastmeal) >= philo->tab->starv) && !philo->tab->is_dead)
+	if (((ft_get_time() - philo->lastmeal) >= philo->tab->starv) \
+	&& !philo->tab->is_dead)
 	{
 		sem_wait(philo->tab->sem_print);
 		philo->tab->is_dead = 1;
-		printf("[%ld] %d %s\n", (ft_get_time() - philo->tab->bigb), philo->id + 1, "is dead");
+		printf("[%ld] %d %s\n", (ft_get_time() - philo->tab->bigb), \
+		philo->id + 1, "is dead");
 		sem_post(philo->tab->sem_print);
 	}	
 	else
@@ -72,7 +74,7 @@ void*			ft_death_patrol(void *student)
 	return (NULL);
 }
 
-void			*ft_acient_greece(void *student)
+void	*ft_acient_greece(void *student)
 {
 	t_philo			*philo;
 	pthread_t		death_patrol;
@@ -80,7 +82,7 @@ void			*ft_acient_greece(void *student)
 	philo = (t_philo *)student;
 	philo->lastmeal = ft_get_time();
 	pthread_create(&death_patrol, NULL, &ft_death_patrol, philo);
-	while (ft_cycles(philo->meals,philo->tab->cycles) && !philo->tab->is_dead)
+	while (ft_cycles(philo->meals, philo->tab->cycles) && !philo->tab->is_dead)
 		ft_greecelife(philo);
 	pthread_join(death_patrol, NULL);
 	return (NULL);
